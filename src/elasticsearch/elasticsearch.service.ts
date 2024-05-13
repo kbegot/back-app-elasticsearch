@@ -7,7 +7,7 @@ export class MyElasticsearchService {
 
   async indexDocument(index: string, document: any): Promise<any> {
     return await this.esService.index({
-      index: index,
+      index: 'my-index',
       body: document,
     });
   }
