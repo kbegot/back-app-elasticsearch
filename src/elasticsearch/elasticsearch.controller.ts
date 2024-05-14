@@ -68,7 +68,7 @@ export class ElasticsearchController {
    * @param response - The HTTP response object.
    */
   @Get('getIndex')
-  async searchIndex(
+  async getIndex(
     @Query('index') nameIndex: string,
     @Query('page') page: string,
     @Query('elementsPerPage') elementsPerPage: string,
@@ -86,6 +86,32 @@ export class ElasticsearchController {
       );
     } catch (error) {
       // Otherwise, propagate the error with status 500 (Internal Server Error)
+      throw error;
+    }
+  }
+
+  /**
+   * Endpoint for searching within a specific index.
+   * @param indexName - The name of the index to search within.
+   * @param query - The query string for searching.
+   * @returns A promise resolving to the search result.
+   */
+  @Get('search')
+  async searchIndex(
+    @Query('index') indexName: string,
+    @Query('page') page: number,
+    @Query('elementsPerPage') elementsPerPage: number,
+    @Query('query') query: string,
+  ): Promise<any> {
+    try {
+      return await this.esService.searchIndex(
+        indexName,
+        page,
+        elementsPerPage,
+        query,
+      );
+    } catch (error) {
+      // Handle errors
       throw error;
     }
   }
