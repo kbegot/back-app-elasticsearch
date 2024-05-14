@@ -35,7 +35,8 @@ export class MyElasticsearchService {
   }
 
   /**
-   * Retrieves the list of all indices with their IDs.
+   * Retrieves the list of all indices with their IDs, excluding internal and surveillance indices.
+   * @returns A promise resolving to the list of all indices with their IDs.
    */
   async getAllIndexes(): Promise<any> {
     try {
@@ -61,6 +62,13 @@ export class MyElasticsearchService {
     }
   }
 
+  /**
+   * Searches within a specific index with pagination support.
+   * @param nameIndex - The name of the index to search within.
+   * @param from - The starting index for pagination.
+   * @param elementsPerPage - The number of elements per page for pagination.
+   * @returns A promise resolving to the search result.
+   */
   async getIndexes(
     nameIndex: string,
     from: number,

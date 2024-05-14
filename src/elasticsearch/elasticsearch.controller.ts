@@ -46,7 +46,9 @@ export class ElasticsearchController {
   }
 
   /**
-   * Endpoint to get the list of all indices with their IDs.
+   * Endpoint for retrieving the list of all indices with their IDs.
+   * This route fetches the list of all indices and their IDs from Elasticsearch.
+   * @returns A promise resolving to the list of all indices with their IDs.
    */
   @Get('getAllIndexes')
   async getAllIndexes(): Promise<any> {
@@ -58,6 +60,13 @@ export class ElasticsearchController {
     }
   }
 
+  /**
+   * Endpoint for searching within a specific index with pagination support.
+   * @param nameIndex - The name of the index to search within.
+   * @param page - The page number for pagination.
+   * @param elementsPerPage - The number of elements per page for pagination.
+   * @param response - The HTTP response object.
+   */
   @Get('getIndex')
   async searchIndex(
     @Query('index') nameIndex: string,
