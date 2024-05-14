@@ -2,24 +2,22 @@ import {
   Controller,
   Post,
   Body,
-  Headers,
-  BadRequestException,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { MyElasticsearchService } from './elasticsearch.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('elasticsearch')
 export class ElasticsearchController {
   constructor(private readonly esService: MyElasticsearchService) {}
 
   @Post('index')
+  @UseInterceptors(FileInterceptor('file'))
   async indexDocument(
     @Body() body: any,
-    @Headers('X-Index-Name') indexName: string,
+    @UploadedFile('file') file,
   ): Promise<any> {
-    if (!indexName) {
-      throw new BadRequestException('X-Index-Name header is missing.');
-    }
-
-    return await this.esService.indexDocument(indexName, body);
+    return await this.esService.indexDocument(body.indexName, file);
   }
 }
