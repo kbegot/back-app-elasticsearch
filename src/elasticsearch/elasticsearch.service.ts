@@ -78,10 +78,8 @@ export class MyElasticsearchService {
       index: nameIndex,
       from: from,
       size: elementsPerPage,
-      body: {
-        query: {
-          match_all: {},
-        },
+      query: {
+        match_all: {},
       },
     });
   }
