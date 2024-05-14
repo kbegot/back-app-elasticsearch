@@ -5,6 +5,11 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 export class MyElasticsearchService {
   constructor(private readonly esService: ElasticsearchService) {}
 
+  /**
+   * Indexes a document in Elasticsearch.
+   * @param index - The name of the index.
+   * @param document - The document to be indexed.
+   */
   async indexDocument(index: string, document: any): Promise<any> {
     try {
       // Check if the index already exists
@@ -25,10 +30,8 @@ export class MyElasticsearchService {
         body: document,
       });
     } catch (error) {
-      throw new HttpException(
-        `Erreur lors de l'indexation du document : ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      // If an error occurs during indexing, rethrow it
+      throw error;
     }
   }
 }
