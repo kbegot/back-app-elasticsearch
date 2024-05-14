@@ -55,4 +55,5 @@ L'API devrait démarrer sur le port par défaut `3000`.
 
 L'API fournit les endpoints suivants :
 
-- `POST elasticsearch/index` : Indexe un nouveau document dans Elasticsearch.
+- `POST /elasticsearch/createIndex` : Crée un nouvel index dans Elasticsearch. Cette route permet d'indexer un nouveau document dans Elasticsearch.
+- `GET /elasticsearch/getAllIndexes` : Récupère la liste de tous les index avec leurs IDs. Cette route permet de lister tous les index existants dans Elasticsearch.

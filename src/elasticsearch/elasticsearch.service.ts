@@ -34,4 +34,31 @@ export class MyElasticsearchService {
       throw error;
     }
   }
+
+  /**
+   * Retrieves the list of all indices with their IDs.
+   */
+  async getAllIndexes(): Promise<any> {
+    try {
+      // Get all indices
+      const body = await this.esService.cat.indices({ format: 'json' });
+      // Filter out internal and surveillance indices
+      const filteredIndices = body.filter((index: any) => {
+        // Exclude indices starting with "." and other specific prefixes
+        const excludePrefixes = ['.', 'monitoring-', 'watcher-', 'metricbeat-']; // Add more prefixes if needed
+        return !excludePrefixes.some((prefix) =>
+          index.index.startsWith(prefix),
+        );
+      });
+      // Extract index names and IDs from filtered list
+      const indices = filteredIndices.map((index: any) => ({
+        index: index.index,
+        id: index.uuid,
+      }));
+      return indices;
+    } catch (error) {
+      // Handle errors
+      throw error;
+    }
+  }
 }

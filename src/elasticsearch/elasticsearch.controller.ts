@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   UseInterceptors,
@@ -19,7 +20,7 @@ export class ElasticsearchController {
    * @param body - The request body containing the index name and the file to be indexed.
    * @param file - The uploaded file to be indexed.
    */
-  @Post('index')
+  @Post('createIndex')
   @UseInterceptors(FileInterceptor('file'))
   async indexDocument(
     @Body() body: any,
@@ -39,6 +40,19 @@ export class ElasticsearchController {
         // Otherwise, propagate the error with status 500 (Internal Server Error)
         throw error;
       }
+    }
+  }
+
+  /**
+   * Endpoint to get the list of all indices with their IDs.
+   */
+  @Get('getAllIndexes')
+  async getAllIndexes(): Promise<any> {
+    try {
+      return await this.esService.getAllIndexes();
+    } catch (error) {
+      // Handle errors
+      throw error;
     }
   }
 }
