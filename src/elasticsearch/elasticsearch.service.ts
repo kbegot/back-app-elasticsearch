@@ -78,11 +78,49 @@ export class MyElasticsearchService {
       index: nameIndex,
       from: from,
       size: elementsPerPage,
-      body: {
-        query: {
-          match_all: {},
-        },
+      query: {
+        match_all: {},
       },
     });
+  }
+
+  /**
+   * Searches within a specific index with pagination support.
+   * @param indexName - The name of the index to search within.
+   * @param page - The page number for pagination.
+   * @param elementsPerPage - The number of elements per page for pagination.
+   * @param query - The query string for searching.
+   * @returns A promise resolving to the search result.
+   */
+  async searchIndex(
+    indexName: string,
+    page: number,
+    elementsPerPage: number,
+    query: string,
+  ): Promise<any> {
+    try {
+      return await this.esService.search({
+        index: indexName,
+        from: (page - 1) * elementsPerPage,
+        body: {
+          size: elementsPerPage, // Limiting the search results
+          query: {
+            bool: {
+              must: [
+                {
+                  multi_match: {
+                    query: query,
+                    fields: ['*'],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+    } catch (error) {
+      // Handle errors
+      throw error;
+    }
   }
 }
