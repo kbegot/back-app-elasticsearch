@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { config } from 'dotenv'; // Importer config depuis dotenv
+import { config } from 'dotenv';
 
 async function bootstrap() {
   config();
