@@ -33,4 +33,17 @@ export class MyElasticsearchService {
       throw error;
     }
   }
+
+  async getIndexes(nameIndex: string, from: number, elementsPerPage: number): Promise<any> {
+    return await this.esService.search({
+      index: nameIndex,
+      from: from,
+      size: elementsPerPage,
+      body: {
+        query: {
+          match_all: {},
+        },
+      },
+    });
+  }
 }
