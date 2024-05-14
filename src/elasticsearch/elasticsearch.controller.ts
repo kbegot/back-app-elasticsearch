@@ -9,10 +9,10 @@ import {
   UploadedFile,
   HttpException,
   HttpStatus,
+  Req,
 } from '@nestjs/common';
 import { MyElasticsearchService } from './elasticsearch.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-
 @Controller('elasticsearch')
 export class ElasticsearchController {
   constructor(private readonly esService: MyElasticsearchService) {}
@@ -95,24 +95,18 @@ export class ElasticsearchController {
 
   /**
    * Endpoint for searching within a specific index.
-   * @param indexName - The name of the index to search within.
-   * @param query - The query string for searching.
    * @returns A promise resolving to the search result.
    * @throws {Error} An error if retrieving the mapping fails.
+   * @param body
    */
-  @Get('search')
-  async searchIndex(
-    @Query('index') indexName: string,
-    @Query('page') page: number,
-    @Query('elementsPerPage') elementsPerPage: number,
-    @Query('query') query: string,
-  ): Promise<any> {
+  @Post('search')
+  async searchIndex(@Body() body): Promise<any> {
     try {
       return await this.esService.searchIndex(
-        indexName,
-        page,
-        elementsPerPage,
-        query,
+        body.data.indexName,
+        body.data.currentPage,
+        body.data.itemsPerPage,
+        body.data.query,
       );
     } catch (error) {
       // Handle errors

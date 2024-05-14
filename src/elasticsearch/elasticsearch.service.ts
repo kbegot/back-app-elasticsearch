@@ -99,23 +99,41 @@ export class MyElasticsearchService {
     indexName: string,
     page: number,
     elementsPerPage: number,
-    query: string,
+    query,
   ): Promise<any> {
     try {
+      const mustArray = [];
+
+      // Ajouter des conditions pour chaque champ non vide
+      if (query.author) {
+        mustArray.push({ match: { author: query.author } });
+      }
+      if (query.casting) {
+        mustArray.push({ match: { casting: query.casting } });
+      }
+      if (query.categorie) {
+        mustArray.push({ match: { categorie: query.categorie } });
+      }
+      if (query.realisateur) {
+        mustArray.push({ match: { realisateur: query.realisateur } });
+      }
+      if (query.sortie) {
+        mustArray.push({ match: { sortie: query.sortie } });
+      }
+      if (query.title) {
+        mustArray.push({ match: { title: query.title } });
+      }
+      if (query.type) {
+        mustArray.push({ match: { type: query.type } });
+      }
+
       return await this.esService.search({
         index: indexName,
         from: (page - 1) * elementsPerPage,
         size: elementsPerPage, // Limiting the search results
         query: {
           bool: {
-            must: [
-              {
-                multi_match: {
-                  query: query,
-                  fields: ['*'],
-                },
-              },
-            ],
+            must: mustArray,
           },
         },
       });
