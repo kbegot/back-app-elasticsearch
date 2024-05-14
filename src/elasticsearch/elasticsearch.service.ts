@@ -106,25 +106,25 @@ export class MyElasticsearchService {
 
       // Ajouter des conditions pour chaque champ non vide
       if (query.author) {
-        mustArray.push({ match: { author: query.author } });
+        mustArray.push({ match_phrase: { author: query.author } });
       }
       if (query.casting) {
-        mustArray.push({ match: { casting: query.casting } });
+        mustArray.push({ match_phrase: { cast: query.casting } });
       }
       if (query.categorie) {
-        mustArray.push({ match: { categorie: query.categorie } });
+        mustArray.push({ match_phrase: { listed_in: query.categorie } });
       }
       if (query.realisateur) {
-        mustArray.push({ match: { realisateur: query.realisateur } });
+        mustArray.push({ match_phrase: { director: query.realisateur } });
       }
       if (query.sortie) {
-        mustArray.push({ match: { sortie: query.sortie } });
+        mustArray.push({ match_phrase: { date_added: query.sortie } });
       }
       if (query.title) {
-        mustArray.push({ match: { title: query.title } });
+        mustArray.push({ match_phrase: { title: query.title } });
       }
       if (query.type) {
-        mustArray.push({ match: { type: query.type } });
+        mustArray.push({ match_phrase: { type: query.type } });
       }
 
       return await this.esService.search({
