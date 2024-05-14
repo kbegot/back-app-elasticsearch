@@ -14,7 +14,7 @@ export class MyElasticsearchService {
     try {
       // Check if the index already exists
       const indexExists = await this.esService.indices.exists({ index });
-
+console.log(indexExists)
       if (indexExists) {
         // If the index already exists, throw an exception with an error code 409 (Conflict)
         throw new HttpException(
