@@ -3,6 +3,8 @@ import {
   Get,
   Post,
   Body,
+  Query,
+  Res,
   UseInterceptors,
   UploadedFile,
   HttpException,
@@ -52,6 +54,29 @@ export class ElasticsearchController {
       return await this.esService.getAllIndexes();
     } catch (error) {
       // Handle errors
+      throw error;
+    }
+  }
+
+  @Get('getIndex')
+  async searchIndex(
+    @Query('index') nameIndex: string,
+    @Query('page') page: string,
+    @Query('elementsPerPage') elementsPerPage: string,
+    @Res() response,
+  ): Promise<any> {
+    try {
+      // Calcul de l'index de départ pour la pagination
+      const from = (parseInt(page) - 1) * parseInt(elementsPerPage);
+      response.send(
+        await this.esService.getIndexes(
+          nameIndex,
+          from,
+          parseInt(elementsPerPage),
+        ),
+      );
+    } catch (error) {
+      // Otherwise, propagate the error with status 500 (Internal Server Error)
       throw error;
     }
   }

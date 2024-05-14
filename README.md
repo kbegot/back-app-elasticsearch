@@ -57,3 +57,5 @@ L'API fournit les endpoints suivants :
 
 - `POST /elasticsearch/createIndex` : Crée un nouvel index dans Elasticsearch. Cette route permet d'indexer un nouveau document dans Elasticsearch.
 - `GET /elasticsearch/getAllIndexes` : Récupère la liste de tous les index avec leurs IDs. Cette route permet de lister tous les index existants dans Elasticsearch.
+- `GET /elasticsearch/getIndex` : Recherche dans un index spécifique. Cette route permet de rechercher des éléments dans un index spécifique avec prise en charge de la pagination.
+
