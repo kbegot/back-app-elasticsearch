@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { config } from 'dotenv'; // Importer config depuis dotenv
 
 async function bootstrap() {
+  config();
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: true, // ou true pour permettre à tous les domaines
+    origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true, // autoriser les cookies et les en-têtes d'autorisation
+    credentials: true,
   });
   await app.listen(3000);
 }

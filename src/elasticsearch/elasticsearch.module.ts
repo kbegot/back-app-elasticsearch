@@ -10,9 +10,9 @@ import { ElasticsearchController } from './elasticsearch.controller';
       provide: ElasticsearchService,
       useFactory: () =>
         new ElasticsearchService({
-          node: `${process.env.ELASTICSEARCH_URL}`,
+          node: process.env.ELASTICSEARCH_NODE_URL,
           auth: {
-            apiKey: `${process.env.ELASTICSEARCH_API_KEY}`,
+            apiKey: process.env.ELASTICSEARCH_API_KEY,
           },
         }),
     },
