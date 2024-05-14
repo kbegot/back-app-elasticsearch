@@ -102,19 +102,17 @@ export class MyElasticsearchService {
       return await this.esService.search({
         index: indexName,
         from: (page - 1) * elementsPerPage,
-        body: {
-          size: elementsPerPage, // Limiting the search results
-          query: {
-            bool: {
-              must: [
-                {
-                  multi_match: {
-                    query: query,
-                    fields: ['*'],
-                  },
+        size: elementsPerPage, // Limiting the search results
+        query: {
+          bool: {
+            must: [
+              {
+                multi_match: {
+                  query: query,
+                  fields: ['*'],
                 },
-              ],
-            },
+              },
+            ],
           },
         },
       });
