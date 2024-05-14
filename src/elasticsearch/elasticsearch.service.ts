@@ -7,7 +7,7 @@ export class MyElasticsearchService {
 
   async indexDocument(index: string, document: any): Promise<any> {
     return await this.esService.index({
-      index: index,
+      index: index.toLowerCase(),
       id: document.originalname, // Utilisation de la propriété originalname pour l'ID
       document: document,
     });
