@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 
 @Injectable()
@@ -156,6 +156,60 @@ export class MyElasticsearchService {
       });
     } catch (error) {
       throw error;
+    }
+  }
+
+  /**
+   * Retrieves aggregated film data based on the specified type.
+   * @param type - The type of aggregation to perform (e.g., 'rating', 'listed_in', 'type').
+   * @returns An array containing aggregated film data with keys and counts.
+   * @throws {Error} If an invalid aggregation type is provided or an error occurs during the aggregation process.
+   */
+  async getFilmsAggregation(type: string) {
+    try {
+      let field;
+      switch (type) {
+        case 'rating':
+          field = 'rating';
+          break;
+        case 'listed_in':
+          field = 'listed_in';
+          break;
+        case 'type':
+          field = 'type';
+          break;
+        default:
+          throw new Error('Invalid aggregation type');
+      }
+
+      const body = await this.esService.search({
+        index: 'netflix_title',
+        size: 0, // just need the aggregation
+        aggs: {
+          type: {
+            terms: {
+              field: field,
+              size: 10,
+            },
+          },
+        },
+      });
+
+      if (body.aggregations) {
+        return body.aggregations.type['buckets'].map((bucket: any) => ({
+          key: bucket.key,
+          count: bucket.doc_count,
+        }));
+      } else {
+        console.error(
+          'Unexpected response structure:',
+          body.aggregations?.type,
+        );
+        throw new Error('Error performing aggregation');
+      }
+    } catch (error) {
+      console.error('Aggregation error:', error);
+      throw new Error('Error performing aggregation');
     }
   }
 }

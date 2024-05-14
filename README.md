@@ -60,4 +60,5 @@ L'API fournit les endpoints suivants :
 - `GET /elasticsearch/getIndex` : Récupère la liste des index avec prise en charge de la pagination. Cette route permet d'obtenir une liste d'index spécifiques avec une pagination personnalisable en utilisant la fonction
 - `GET /elasticsearch/search` : Recherche dans un index spécifique avec prise en charge de la pagination. Cette route permet de rechercher des éléments dans un index spécifique avec une pagination personnalisable en utilisant la fonction 
 - `GET /elasticsearch/getAllColumns` : Récupère le mapping des propriétés pour l'index spécifié. Cette route permet de récupérer le mapping des propriétés pour un index spécifique.
+- `GET /elasticsearch/aggregation/:type` : Récupère les données agrégées sur les films en fonction du type spécifié.
 

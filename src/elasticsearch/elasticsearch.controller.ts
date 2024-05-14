@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   HttpException,
-  HttpStatus,
+  HttpStatus, Param,
   Post,
   Query,
   Res,
@@ -128,5 +128,15 @@ export class ElasticsearchController {
       // Handle errors
       throw error;
     }
+  }
+
+  /**
+   * Retrieves aggregated film data based on the specified type.
+   * @param type - The type of aggregation to perform (e.g., 'country', 'listed_in', 'type').
+   * @returns Aggregated film data based on the specified type.
+   */
+  @Get('/aggregation/:type')
+  async getFilmsAggregation(@Param('type') type: string) {
+    return this.esService.getFilmsAggregation(type);
   }
 }
