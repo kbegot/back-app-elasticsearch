@@ -75,7 +75,7 @@ export class ElasticsearchController {
     @Res() response,
   ): Promise<any> {
     try {
-      // Calcul de l'index de départ pour la pagination
+      // Calculating the starting index for pagination
       const from = (parseInt(page) - 1) * parseInt(elementsPerPage);
       response.send(
         await this.esService.getIndexes(

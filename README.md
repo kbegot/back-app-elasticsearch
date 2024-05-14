@@ -15,7 +15,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 1. Clonez ce dépôt sur votre machine :
 
 ```bash
-git clone <https://github.com/kbegot/back-app-elasticsearch>
+git clone https://github.com/kbegot/back-app-elasticsearch
 ```
 
 2. Accédez au répertoire du projet :
