@@ -9,6 +9,7 @@ export class MyElasticsearchService {
    * Indexes a document in Elasticsearch.
    * @param index - The name of the index.
    * @param document - The document to be indexed.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   async indexDocument(index: string, document: any): Promise<any> {
     try {
@@ -37,6 +38,7 @@ export class MyElasticsearchService {
   /**
    * Retrieves the list of all indices with their IDs, excluding internal and surveillance indices.
    * @returns A promise resolving to the list of all indices with their IDs.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   async getAllIndexes(): Promise<any> {
     try {
@@ -91,6 +93,7 @@ export class MyElasticsearchService {
    * @param elementsPerPage - The number of elements per page for pagination.
    * @param query - The query string for searching.
    * @returns A promise resolving to the search result.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   async searchIndex(
     indexName: string,
@@ -118,6 +121,22 @@ export class MyElasticsearchService {
       });
     } catch (error) {
       // Handle errors
+      throw error;
+    }
+  }
+
+  /**
+   * Retrieves the mapping of properties for the specified index.
+   * @param indexName - The name of the index for which to retrieve the mapping of properties.
+   * @returns The mapping of properties for the specified index.
+   * @throws {Error} An error if retrieving the mapping fails.
+   */
+  async getAllcolumns(indexName: string): Promise<any> {
+    try {
+      return await this.esService.indices.getMapping({
+        index: indexName,
+      });
+    } catch (error) {
       throw error;
     }
   }

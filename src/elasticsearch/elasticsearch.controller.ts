@@ -21,6 +21,7 @@ export class ElasticsearchController {
    * Endpoint for indexing a document in Elasticsearch.
    * @param body - The request body containing the index name and the file to be indexed.
    * @param file - The uploaded file to be indexed.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   @Post('createIndex')
   @UseInterceptors(FileInterceptor('file'))
@@ -49,6 +50,7 @@ export class ElasticsearchController {
    * Endpoint for retrieving the list of all indices with their IDs.
    * This route fetches the list of all indices and their IDs from Elasticsearch.
    * @returns A promise resolving to the list of all indices with their IDs.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   @Get('getAllIndexes')
   async getAllIndexes(): Promise<any> {
@@ -66,6 +68,7 @@ export class ElasticsearchController {
    * @param page - The page number for pagination.
    * @param elementsPerPage - The number of elements per page for pagination.
    * @param response - The HTTP response object.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   @Get('getIndex')
   async getIndex(
@@ -95,6 +98,7 @@ export class ElasticsearchController {
    * @param indexName - The name of the index to search within.
    * @param query - The query string for searching.
    * @returns A promise resolving to the search result.
+   * @throws {Error} An error if retrieving the mapping fails.
    */
   @Get('search')
   async searchIndex(
@@ -110,6 +114,22 @@ export class ElasticsearchController {
         elementsPerPage,
         query,
       );
+    } catch (error) {
+      // Handle errors
+      throw error;
+    }
+  }
+
+  /**
+   * Retrieves the mapping of properties for the specified index.
+   * @param indexName - The name of the index for which to retrieve the mapping of properties.
+   * @returns The mapping of properties for the specified index.
+   * @throws {Error} An error if retrieving the mapping fails.
+   */
+  @Get('getAllColumns')
+  async getAllColumns(@Query('indexName') indexName: string): Promise<any> {
+    try {
+      return await this.esService.getAllcolumns(indexName);
     } catch (error) {
       // Handle errors
       throw error;
