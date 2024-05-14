@@ -1,18 +1,18 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Query,
-  Res,
-  UseInterceptors,
-  UploadedFile,
   HttpException,
   HttpStatus,
-  Req,
+  Post,
+  Query,
+  Res,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { MyElasticsearchService } from './elasticsearch.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+
 @Controller('elasticsearch')
 export class ElasticsearchController {
   constructor(private readonly esService: MyElasticsearchService) {}
