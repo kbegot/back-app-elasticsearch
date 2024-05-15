@@ -99,32 +99,16 @@ export class MyElasticsearchService {
     indexName: string,
     page: number,
     elementsPerPage: number,
-    query,
+    query: { [key: string]: string },
   ): Promise<any> {
     try {
       const mustArray = [];
 
-      // Ajouter des conditions pour chaque champ non vide
-      if (query.author) {
-        mustArray.push({ match_phrase: { author: query.author } });
-      }
-      if (query.casting) {
-        mustArray.push({ match_phrase: { cast: query.casting } });
-      }
-      if (query.categorie) {
-        mustArray.push({ match_phrase: { listed_in: query.categorie } });
-      }
-      if (query.realisateur) {
-        mustArray.push({ match_phrase: { director: query.realisateur } });
-      }
-      if (query.sortie) {
-        mustArray.push({ match_phrase: { date_added: query.sortie } });
-      }
-      if (query.title) {
-        mustArray.push({ match_phrase: { title: query.title } });
-      }
-      if (query.type) {
-        mustArray.push({ match_phrase: { type: query.type } });
+      // Parcourir dynamiquement les champs de query et ajouter des conditions pour chaque champ non vide
+      for (const [key, value] of Object.entries(query)) {
+        if (value) {
+          mustArray.push({ match_phrase: { [key]: value } });
+        }
       }
 
       return await this.esService.search({
