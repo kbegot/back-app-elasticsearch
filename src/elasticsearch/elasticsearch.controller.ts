@@ -133,10 +133,15 @@ export class ElasticsearchController {
   /**
    * Retrieves aggregated film data based on the specified type.
    * @param type - The type of aggregation to perform (e.g., 'country', 'listed_in', 'type').
+   * @param index
+   * @param columnType
    * @returns Aggregated film data based on the specified type.
    */
-  @Get('/aggregation/:type')
-  async getFilmsAggregation(@Param('type') type: string) {
-    return this.esService.getFilmsAggregation(type);
+  @Get('/aggregation')
+  async getFilmsAggregation(
+    @Query('type') type: string,
+    @Query('index') index: string,
+  ) {
+    return this.esService.getFilmsAggregation(type, index);
   }
 }
