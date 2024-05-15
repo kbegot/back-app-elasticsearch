@@ -121,6 +121,16 @@ Résulat obtenue :
         },
 ````
 
-## Création d'un Dashboard
+## Création du dashboard pour nôtre jeux de données 
 
 ![alt text](image.png)
+
+# Description du Dashboard
+
+Le dashboard présente une analyse des données relatives aux enregistrements. Voici une vue d'ensemble des différents éléments présents :
+- **Nombre de Records :** Ce compteur indique le nombre total de records présents dans le dataset.
+- **Répartition des Types de Records :** Ce donut chart permet de visualiser la répartition des enregistrements par type (TV Show ou Movie). De plus, il affiche la durée associée à chaque type.
+- **Historique des Ajouts :** Ce graphique montre la fréquence des ajouts de films et de séries au fil du temps, avec un décompte par année.
+- **Top 9 des Pays :** Ce donut chart met en avant les neuf pays les plus représentés dans notre dataset de films et séries.
+- **Répartition des Catégories d'Audience :** Ce graphique illustre la répartition des différentes catégories d'audience attribuées à nos films et séries.
+Chaque élément contribue à offrir une compréhension approfondie des données et des tendances présentes dans notre ensemble de données.
