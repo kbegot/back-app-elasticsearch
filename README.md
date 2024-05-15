@@ -2,6 +2,10 @@
 
 Ce projet est une application Nest.js qui utilise Elasticsearch pour fournir une API. L'API permet aux utilisateurs d'effectuer des opérations de recherche avancées dans un index Elasticsearch et d'indexer de nouveaux documents de manière efficace.
 
+## Liens des partie front-end et back-end(api) de l'appication
+[Projet react](https://github.com/Flunshield/frontElasticSearch)  
+[Api nestJs](https://github.com/kbegot/back-app-elasticsearch)
+
 ## Prérequis
 
 Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur votre machine :
@@ -60,5 +64,59 @@ L'API fournit les endpoints suivants :
 - `GET /elasticsearch/getIndex` : Récupère la liste des index avec prise en charge de la pagination. Cette route permet d'obtenir une liste d'index spécifiques avec une pagination personnalisable en utilisant la fonction
 - `GET /elasticsearch/search` : Recherche dans un index spécifique avec prise en charge de la pagination. Cette route permet de rechercher des éléments dans un index spécifique avec une pagination personnalisable en utilisant la fonction 
 - `GET /elasticsearch/getAllColumns` : Récupère le mapping des propriétés pour l'index spécifié. Cette route permet de récupérer le mapping des propriétés pour un index spécifique.
-- `GET /elasticsearch/aggregation/:type` : Récupère les données agrégées sur les films en fonction du type spécifié.
+- `GET /elasticsearch/aggregation` : Récupère les données agrégées sur l'index en fonction du type spécifié.
 
+## Création d'une pipeline pour changer un type de variable
+
+Type de la variable existante :
+``` json
+    "country": {
+      "type": "text",
+      "fielddata": true
+    },
+```
+
+Création de la pippeline :
+````json
+PUT _ingest/pipeline/changer_type_country
+{
+  "description": "Changer le type du champ country de text à keyword",
+  "processors": [
+    {
+      "set": {
+        "field": "country",
+        "value": "{{country}}",
+        "override": true
+      }
+    }
+  ]
+}
+````
+
+Application de la pipeline sur son index
+
+````json
+POST /_reindex
+{
+  "source": {
+    "index": "netflix_title"
+  },
+  "dest": {
+    "index": "netflix_title_modifie",
+    "pipeline": "changer_type_country"
+  }
+}
+````
+
+Résulat obtenue :
+````json
+        "country": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+````
