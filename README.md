@@ -120,3 +120,7 @@ Résulat obtenue :
           }
         },
 ````
+
+## Création d'un Dashboard
+
+![alt text](image.png)
