@@ -1,6 +1,6 @@
 # Nest.js Elasticsearch API
 
-Ce projet est une application Nest.js qui utilise Elasticsearch pour fournir une API. L'API permet aux utilisateurs d'effectuer des opérations de recherche avancées dans un index Elasticsearch et d'indexer de nouveaux documents de manière efficace.
+Ce projet est une application Nest.js qui utilise Elasticsearch pour fournir une API. Cette API permet aux utilisateurs d'effectuer des opérations de recherche avancées dans un index Elasticsearch et d'indexer de nouveaux jeux de données de manière efficace. Ainsi, toutes nos routes API et fonctionnalités Front sont compatibles avec n'importe quel jeu de données indexé dans Elasticsearch.
 
 ## Liens des partie front-end et back-end(api) de l'appication
 [Projet react](https://github.com/Flunshield/frontElasticSearch)  
