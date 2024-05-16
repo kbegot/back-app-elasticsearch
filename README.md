@@ -66,6 +66,10 @@ L'API fournit les endpoints suivants :
 - `GET /elasticsearch/getAllColumns` : Récupère le mapping des propriétés pour l'index spécifié. Cette route permet de récupérer le mapping des propriétés pour un index spécifique.
 - `GET /elasticsearch/aggregation` : Récupère les données agrégées sur l'index en fonction du type spécifié.
 
+# Système de recherche
+
+Nous avons mis en place un système de recherche dynamique permettant à nos utilisateurs d'effectuer des recherches précises sur n'importe quel champ de leurs propres jeux de données. Cette fonctionnalité offre également la possibilité de croiser plusieurs filtres pour affiner les résultats et obtenir une précision maximale.
+
 ## Création d'une pipeline pour changer un type de variable
 
 Type de la variable existante :
